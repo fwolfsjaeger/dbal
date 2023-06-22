@@ -7,6 +7,7 @@ namespace Doctrine\DBAL\Tests\Functional\LockMode;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\LockMode;
+use Doctrine\DBAL\Platforms\CockroachDBPlatform;
 use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Doctrine\DBAL\Platforms\SQLServerPlatform;
 use Doctrine\DBAL\Schema\Table;
@@ -35,6 +36,10 @@ class NoneTest extends FunctionalTestCase
             $this->connection->executeStatement('ALTER DATABASE ' . $db . ' SET SINGLE_USER WITH ROLLBACK IMMEDIATE');
             $this->connection->executeStatement('ALTER DATABASE ' . $db . ' SET READ_COMMITTED_SNAPSHOT ON');
             $this->connection->executeStatement('ALTER DATABASE ' . $db . ' SET MULTI_USER');
+        }
+
+        if ($this->connection->getDatabasePlatform() instanceof CockroachDBPlatform) {
+            self::markTestSkipped('This test cannot run on CockroachDB using an in-memory database');
         }
 
         $table = new Table('users');

@@ -90,6 +90,7 @@ final class DriverManager
         'pgsql'              => PgSQL\Driver::class,
         'sqlsrv'             => SQLSrv\Driver::class,
         'sqlite3'            => SQLite3\Driver::class,
+        'pdo_crdb'           => PDO\CockroachDB\Driver::class,
     ];
 
     /**
@@ -110,6 +111,7 @@ final class DriverManager
         'pgsql'      => 'pdo_pgsql',
         'sqlite'     => 'pdo_sqlite',
         'sqlite3'    => 'pdo_sqlite',
+        'crdb'       => 'pdo_crdb',
     ];
 
     /**
